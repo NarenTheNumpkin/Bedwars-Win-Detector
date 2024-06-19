@@ -5,6 +5,6 @@ os.chdir("../test")
 
 
 for i in path:
-    result = main(os.path.join("images", i), show='False')
+    result, MVP = main(os.path.join("images", i), show='False')
     with open("results.txt", "a") as file:
         file.writelines([result, '\t', i, '\n'])

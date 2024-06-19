@@ -1,4 +1,5 @@
 import cv2 as cv
+import re
 
 def normalise(image, mask):
     if (image.shape[0], image.shape[1]) == (1440, 2560):
@@ -11,7 +12,6 @@ def normalise(image, mask):
         mask = mask[start_h:end_h, start_w:end_w]
         return cropped, mask
 
-    # idea -- before we encounter ELIMINATED or any other keyword (3rd Killer) we can put bool value to test wins and correctly decide who won.
 
     elif (image.shape[0], image.shape[1]) == (1080,1920):
         start_w = 0
@@ -27,16 +27,23 @@ def normalise(image, mask):
     else:
         return image, mask
 
-def Similarity(string, string2="Green"):
-    string = string.lower()
-    string = string.capitalize()
-    if len(string) != len(string2):
-        return 0
-    correct = 0
-    for i in range(len(string)):
-        if string[i] == string2[i]:
-            correct += 1
+def jacquard_similarity(word1, word2):
+    set1 = set(word1)
+    set2 = set(word2)
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    return len(intersection) / len(union)
 
-    return correct/len(string)
+def MostSimilar(input_word, word_list):
+    highest_similarity_score = -1
+    most_similar = None
+
+    for word in word_list:
+        similarity_score = jacquard_similarity(input_word, word)
+        if similarity_score > highest_similarity_score:
+            highest_similarity_score = similarity_score
+            most_similar = word
+
+    return most_similar, highest_similarity_score
 
 
