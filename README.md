@@ -17,8 +17,9 @@ Top Killer detection will be added soon.
 
 ## Command Line Usage
 ```
-python ocr.py (path to image)
+python ocr.py (path to image) (show)
 ```
+show: If True, displays the detected output with bounding boxes and the mask.
 
 ## Examples
 
